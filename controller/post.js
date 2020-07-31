@@ -37,7 +37,9 @@ const getPost = async(req,res) => {
       attributes : ['nama', 'username', 'foto'],
     }]
   })
+  if (!post) return response(res,false,null,'Post tidak ditemukan!',401)
 
+  response(res,true, post,'Berikut data post',201)
 }
 
 module.exports = {
