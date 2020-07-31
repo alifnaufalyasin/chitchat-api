@@ -50,7 +50,7 @@ const updateUser = async(req, res) => {
     if (!checkEmail(payload.email)) return response(res,false,null,'email sudah digunakan',401)
     user.email = payload.email
   }
-  if (req.file.secure_url) user.foto = req.file.secure_url
+  if (req.file) user.foto = req.file.secure_url
   if (payload.password) user.password = payload.password
   await user.save()
   return response(res, true, user,'Akun sukses diupdate',200)
