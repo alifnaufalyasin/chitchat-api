@@ -77,6 +77,11 @@ app.route('/api/post')
     authenticateToken,
     Post.getMyPost
   )
+  
+app.route('/api/post/all')
+.get(
+  Post.getAllPost
+)
 
 
 
