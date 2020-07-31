@@ -12,7 +12,8 @@ const createUser = async(req, res) => {
   data.foto = req.file.secure_url
   const user = new User(data)
   console.log(user)
-  await user.save()
+  const response = await user.save()
+  console.log(response);
   response(res,true, user,'Create akun telah berhasil',201)  
 }
 
@@ -40,6 +41,7 @@ const updateUser = async(req, res) => {
   if (!user) return response(res,false,null,'Akun tidak ditemukan!',401)
 
   if (payload.nama) user.nama = payload.nama
+  if (payload.bio) user.bio = payload.bio
   if (payload.username) {
     if (!checkUsername(payload.username)) return response(res,false,null,'Username sudah digunakan',401)
     user.username = payload.username
