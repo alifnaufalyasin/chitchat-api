@@ -18,8 +18,7 @@ const { authenticateToken } = require('./helper/auth')
 const { addPost, editPost } = require('./controller/post')
 
 app.route('/')
-  .get(
-    Function(req,res){
+  .get((req,res) => {
       res.status(200).send('Hello')
     }
   )
