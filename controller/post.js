@@ -45,8 +45,9 @@ const getPost = async(req,res) => {
 
 const getMyPost = async(req,res) => {
   const id_user = req.user.id_user
-  
-  const post = await Post.findByPk(id_post, {
+
+  const post = await Post.findAll({
+    where: {userIdUser: id_user},
     attributes: ['id_post','text', 'gambar', 'createdAt', 'updatedAt'],
     include : [{
       model: User,
@@ -62,5 +63,6 @@ const getMyPost = async(req,res) => {
 module.exports = {
   addPost,
   editPost,
-  getPost
+  getPost,
+  getMyPost
 }
