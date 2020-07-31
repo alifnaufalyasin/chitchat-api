@@ -78,8 +78,7 @@ app.route('/api/post')
     Post.getMyPost
   )
   
-app.route('/api/post/all')
-.get(
+app.get('/api/post/all',
   Post.getAllPost
 )
 
