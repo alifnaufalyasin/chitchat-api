@@ -43,6 +43,22 @@ const getPost = async(req,res) => {
   response(res,true, post,'Berikut data post',201)
 }
 
+const getMyPost = async(req,res) => {
+  const id_user = req.user.id_user
+  
+  const post = await Post.findByPk(id_post, {
+    attributes: ['id_post','text', 'gambar', 'createdAt', 'updatedAt'],
+    include : [{
+      model: User,
+      attributes : ['nama', 'username', 'foto'],
+    }]
+  })
+  console.log(post);
+  if (!post) return response(res,false,null,'Post tidak ditemukan!',401)
+
+  response(res,true, post,'Berikut data post',201)
+}
+
 module.exports = {
   addPost,
   editPost,

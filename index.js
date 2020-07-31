@@ -72,6 +72,12 @@ app.route('/api/post/:id')
     Post.getPost
   )
 
+app.route('/api/post')
+  .get(
+    authenticateToken,
+    Post.getMyPost
+  )
+
 
 
 app.use((req,res,next) => {
