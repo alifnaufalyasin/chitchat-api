@@ -9,7 +9,7 @@ const app = express()
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
 
-const port = 3000
+const port = process.env.PORT || 3000
 const response = require('./helper/response')
 const { createUser, updateUser, login, getUser } = require('./controller/user')
 const { upload } = require('./helper/upload')
