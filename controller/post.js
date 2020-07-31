@@ -20,11 +20,24 @@ const editPost = async(req, res) => {
   const id_post = Number(req.params.id)
   const post = await Post.findByPk(id_post)
   if (!post) return response(res,false,null,'Post tidak ditemukan!',401)
+  if (post.userIdUser != req.user.id_user) return response(res,false,null,'Gagal update, tidak ada akses ke post ini',401)
   if (req.file) post.gambar = req.file.secure_url
   if (req.body.text) post.text = req.body.text
   console.log(post)
   await post.save()
   response(res,true, post,'Post berhasil diedit',201)  
+}
+
+const getPost = async(req,res) => {
+  const id_post = Number(req.params.id)
+  const post = await Post.findByPk(id_post, {
+    attributes: ['id_post','text', 'gambar', 'createdAt', 'updatedAt'],
+    include : [{
+      model: User,
+      attributes : ['nama', 'username', 'foto'],
+    }]
+  })
+
 }
 
 module.exports = {
