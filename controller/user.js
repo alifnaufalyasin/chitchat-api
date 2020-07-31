@@ -64,7 +64,7 @@ const getUser = async(req, res) => {
   })
   let data = user
   delete data.password
-  return response(res, true, data,'Akun sukses diupdate',200)
+  return response(res, true, data,'Berikut data akun',200)
 }
 
 module.exports = {

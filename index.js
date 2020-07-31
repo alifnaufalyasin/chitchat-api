@@ -40,6 +40,7 @@ app.route('/api/users/login')
 app.route('/api/users')
   .put(
     authenticateToken,
+    upload.single('foto'),
     updateUser
   )
 
