@@ -11,11 +11,11 @@ app.use(bodyParser.json())
 
 const port = process.env.PORT || 3000
 const response = require('./helper/response')
-const { createUser, updateUser, login, getUser } = require('./controller/user')
+const User = require('./controller/user')
 const { upload } = require('./helper/upload')
 const { deleteFoto, validateEmail, validateUsername } = require('./helper/validasi')
 const { authenticateToken } = require('./helper/auth')
-const { addPost, editPost } = require('./controller/post')
+const Post = require('./controller/post')
 
 app.route('/')
   .get((req,res) => {
@@ -29,25 +29,25 @@ app.route('/api/users')
     upload.single('foto'),
     validateEmail(),
     validateUsername(),
-    createUser
+    User.createUser
   )
 
 app.route('/api/users/login')
   .post(
-    login
+    User.login
   )
 
 app.route('/api/users')
   .put(
     authenticateToken,
     upload.single('foto'),
-    updateUser
+    User.updateUser
   )
 
 app.route('/api/users')
   .get(
     authenticateToken,
-    getUser
+    User.getUser
   )
 
 
@@ -56,15 +56,22 @@ app.route('/api/post/add')
   .post(
     authenticateToken,
     upload.single('gambar'),
-    addPost
+    Post.addPost
   )
 
 app.route('/api/post/:id')
   .post(
     authenticateToken,
     upload.single('gambar'),
-    editPost
+    Post.editPost
   )
+
+app.route('/api/post/:id')
+  .get(
+    authenticateToken,
+    Post.getPost
+  )
+
 
 
 app.use((req,res,next) => {
