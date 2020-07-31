@@ -25,8 +25,10 @@ const storage = cloudinaryStorage({
     console.log(file)
     const ext = file.originalname.split('.')
     let name = ''
-    if (file.fieldname == 'foto') name += Date.now() +"_"+ req.body.nama +'.'+ ext[ext.length-1]
-    else name += Date.now() +"_"+ file.originalname
+    if (file.fieldname == 'foto') {
+      if (req.body.nama) name += Date.now() +"_"+ req.body.nama +'.'+ ext[ext.length-1]
+      else name += Date.now() +"_"+ req.user.nama +'.'+ ext[ext.length-1]
+    } else name += Date.now() +"_"+ file.originalname
     cb(null,name)
   }
 })
