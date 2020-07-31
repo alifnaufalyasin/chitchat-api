@@ -17,6 +17,13 @@ const { deleteFoto, validateEmail, validateUsername } = require('./helper/valida
 const { authenticateToken } = require('./helper/auth')
 const { addPost, editPost } = require('./controller/post')
 
+app.route('/')
+  .get(
+    Function(req,res){
+      res.status(200).send('Hello')
+    }
+  )
+
 //route User
 app.route('/api/users')
   .post(

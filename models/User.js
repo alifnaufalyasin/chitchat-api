@@ -16,11 +16,18 @@ const User = db.define(
       },
       username : {
         type : Sequelize.STRING,
+        unique: true,
         allowNull : false
       },
       email : {
         type : Sequelize.STRING,
-        allowNull : false
+        unique : true,
+        allowNull : false,
+        validate: {
+          isEmail: {
+            msg: "Yang anda masukkan bukan email, silahkan cek kembali"
+          }
+        }
       },
       bio : {
         type : Sequelize.STRING,
