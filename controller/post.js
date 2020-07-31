@@ -61,7 +61,6 @@ const getMyPost = async(req,res) => {
 }
 
 const getAllPost = async(req,res) => {
-  const id_user = req.user.id_user
 
   const post = await Post.findAll({
     attributes: ['id_post','text', 'gambar', 'createdAt', 'updatedAt'],
