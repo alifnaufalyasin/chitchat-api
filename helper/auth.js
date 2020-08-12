@@ -7,10 +7,11 @@ function signUser(data) {
 }
 
 async function authenticateToken(req,res,next) {
+  console.log(req.url);
   const authHeader = req.headers['authorization']
   const token = authHeader && authHeader.split(' ')[1]
   console.log(token)
-  if (token == null) {
+  if (!token) {
     const err = new Error('Authentication tidak ditemukan')
     err.status = 401
     next(err)

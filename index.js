@@ -85,6 +85,12 @@ app.route('/api/post')
     authenticateToken,
     Post.getMyPost
   )
+
+app.route('/api/post/delete/:id')
+  .delete(
+    authenticateToken,
+    Post.deletePost
+  )
   
 
 

@@ -10,7 +10,7 @@ const addPost = async(req, res) => {
     data.gambar = "-"
   }
   const post = new Post(data)
-  console.log(post)
+  // console.log(post)
   await post.save()
   await post.setUser(user)
   response(res,true, post,'Create post telah berhasil',201)  
@@ -23,7 +23,7 @@ const editPost = async(req, res) => {
   if (post.userIdUser != req.user.id_user) return response(res,false,null,'Gagal update, tidak ada akses ke post ini',401)
   if (req.file) post.gambar = req.file.secure_url
   if (req.body.text) post.text = req.body.text
-  console.log(post)
+  // console.log(post)
   await post.save()
   response(res,true, post,'Post berhasil diedit',201)  
 }
@@ -37,7 +37,7 @@ const getPost = async(req,res) => {
       attributes : ['nama', 'username', 'foto'],
     }]
   })
-  console.log(post);
+  // console.log(post);
   if (!post) return response(res,false,null,'Post tidak ditemukan!',401)
 
   response(res,true, post,'Berikut data post',201)
@@ -54,7 +54,7 @@ const getMyPost = async(req,res) => {
       attributes : ['nama', 'username', 'foto'],
     }]
   })
-  console.log(post);
+  // console.log(post);
   if (!post) return response(res,false,null,'Post tidak ditemukan!',401)
 
   response(res,true, post,'Berikut data post',201)
@@ -69,10 +69,21 @@ const getAllPost = async(req,res) => {
       attributes : ['nama', 'username', 'foto'],
     }]
   })
-  console.log(post);
+  // console.log(post);
   if (!post) return response(res,false,null,'Post tidak ditemukan!',401)
 
   response(res,true, post,'Berikut data post',201)
+}
+
+const deletePost = async(req,res) => {
+  const postId = Number(req.params.id)
+
+  const post = await Post.findByPk(postId)
+
+  if (!post) return response(res,false,null,'Post tidak ditemukan!',401)
+  await post.destroy()
+
+  response(res,true, null,'Post berhasil dihapus',201)
 }
 
 module.exports = {
@@ -80,5 +91,6 @@ module.exports = {
   editPost,
   getPost,
   getMyPost,
-  getAllPost
+  getAllPost,
+  deletePost
 }
