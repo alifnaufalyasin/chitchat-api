@@ -55,6 +55,11 @@ app.route('/api/users')
 
 
 //route Post
+app.route('/api/post/all')
+  .get(
+    Post.getAllPost
+  )
+
 app.route('/api/post/add')
   .post(
     authenticateToken,
@@ -81,9 +86,7 @@ app.route('/api/post')
     Post.getMyPost
   )
   
-app.get('/api/post/all',
-  Post.getAllPost
-)
+
 
 
 
