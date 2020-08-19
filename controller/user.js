@@ -9,7 +9,9 @@ const createUser = async(req, res) => {
   let data = req.body
   data.bio = '-'
   data.password = encryptPass(data.password)
-  data.foto = req.file.secure_url
+  if (req.file) data.foto = req.file.secure_url
+  else data.foto = "-"
+  
   const user = new User(data)
   console.log(user)
   const hasil = await user.save()
