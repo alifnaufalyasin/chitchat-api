@@ -12,8 +12,7 @@ const createUser = async(req, res) => {
   data.foto = req.file.secure_url
   const user = new User(data)
   console.log(user)
-  const response = await user.save()
-  console.log(response);
+  const hasil = await user.save()
   response(res,true, user,'Create akun telah berhasil',201)  
 }
 
