@@ -19,7 +19,7 @@ const createUser = async(req, res) => {
     response(res,true, user,'Create akun telah berhasil',201)  
   } catch (error) {
     console.log(error)
-    response(res,false, null, error, 201)
+    response(res,false, null, error.errors[0].message, 201)
   }
   
 
