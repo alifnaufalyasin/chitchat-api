@@ -5,6 +5,11 @@ const { encryptPass, isValid } = require('../helper/encrypt')
 const { checkUsername, checkEmail } = require('../helper/validasi')
 const { signUser } = require('../helper/auth')
 
+function validateEmail(email) {
+  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+}
+
 const createUser = async(req, res) => {
   let data = req.body
   data.bio = '-'
@@ -26,7 +31,10 @@ const createUser = async(req, res) => {
 const login = async(req, res) => {
   const payload = req.body
   let user
-  if (payload.usermail.match(/@/g)) user = await User.findOne({where: { email: payload.usermail }})
+  if (payload.usermail.match(/@/g)){ 
+    if (!validateEmail(payload.usermail)) return response(res,false,null,'Email Tidak Valid',401)
+    user = await User.findOne({where: { email: payload.usermail }})
+  }
   else user = await User.findOne({where: { username: payload.usermail }})
 
   if (!user) return response(res,false,null,'Akun tidak ditemukan!',401)
