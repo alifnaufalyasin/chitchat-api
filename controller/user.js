@@ -21,10 +21,6 @@ const createUser = async(req, res) => {
     console.log(error)
     response(res,false, null, error.errors[0].message, 201)
   }
-  
-
-    
-
 }
 
 const login = async(req, res) => {
