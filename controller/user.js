@@ -13,9 +13,9 @@ const createUser = async(req, res) => {
   else data.foto = "-"
   
   const user = new User(data)
-  console.log(user)
+  // console.log(user)
   const hasil = await user.save()
-  // console.log(hasil)
+  console.log(hasil)
   if (hasil.error) {
     console.log(hasil.error)
     response(res,false, null, hasil.error,201)
