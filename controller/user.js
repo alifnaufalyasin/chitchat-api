@@ -15,7 +15,8 @@ const createUser = async(req, res) => {
   const user = new User(data)
   console.log(user)
   const hasil = await user.save()
-  console.log(hasil)
+  // console.log(hasil)
+  if (hasil.error) console.log(hasil.error)
   response(res,true, user,'Create akun telah berhasil',201)  
 }
 
