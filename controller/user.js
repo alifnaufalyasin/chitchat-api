@@ -5,10 +5,6 @@ const { encryptPass, isValid } = require('../helper/encrypt')
 const { checkUsername, checkEmail } = require('../helper/validasi')
 const { signUser } = require('../helper/auth')
 
-function validateEmail(email) {
-  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
-}
 
 const createUser = async(req, res) => {
   let data = req.body
@@ -24,23 +20,21 @@ const createUser = async(req, res) => {
     response(res,true, user,'Create akun telah berhasil',201)  
   } catch (error) {
     console.log(error)
-    response(res,false, null, error.errors[0].message, 201)
+    response(res,false, null, error.errors[0].message, 401)
   }
 }
 
 const login = async(req, res) => {
   const payload = req.body
   let user
-  if (payload.usermail.match(/@/g)){ 
-    if (!validateEmail(payload.usermail)) return response(res,false,null,'Email Tidak Valid',401)
-    user = await User.findOne({where: { email: payload.usermail }})
-  }
+  if (payload.usermail.match(/@/g)) user = await User.findOne({where: { email: payload.usermail }})
   else user = await User.findOne({where: { username: payload.usermail }})
-
+  console.log(user);
   if (!user) return response(res,false,null,'Akun tidak ditemukan!',401)
   if(isValid(payload.password, user.password)) {
     let data = {}
     data.id_user = user.id_user
+    data.username = user.username
     data.nama = user.nama
     data.email = user.email
     const token = signUser(data)
