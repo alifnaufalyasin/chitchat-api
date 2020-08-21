@@ -35,8 +35,10 @@ const login = async(req, res) => {
     let data = {}
     data.id_user = user.id_user
     data.username = user.username
+    data.bio = user.bio
     data.nama = user.nama
     data.email = user.email
+    data.foto = user.foto
     const token = signUser(data)
     data.token = token
     return response(res,true, data,'Sukses Login',200)
