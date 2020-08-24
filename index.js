@@ -14,11 +14,10 @@ app.use(cors())
 
 const port = process.env.PORT || 3000
 const response = require('./helper/response')
-const User = require('./controller/user')
-const { upload } = require('./helper/upload')
-const { deleteFoto, validateEmail, validateUsername } = require('./helper/validasi')
-const { authenticateToken } = require('./helper/auth')
-const Post = require('./controller/post')
+const { deleteFoto } = require('./helper/validasi')
+const postRoutes = require('./routes/post')
+const userRoutes = require('./routes/user')
+
 
 app.route('/')
   .get((req,res) => {
@@ -27,73 +26,10 @@ app.route('/')
   )
 
 //route User
-app.route('/api/users')
-  .post(
-    upload.single('foto'),
-    validateEmail(),
-    validateUsername(),
-    User.createUser
-  )
-
-app.route('/api/users/login')
-  .post(
-    User.login
-  )
-
-app.route('/api/users')
-  .put(
-    authenticateToken,
-    upload.single('foto'),
-    User.updateUser
-  )
-
-app.route('/api/users')
-  .get(
-    authenticateToken,
-    User.getUser
-  )
-
+app.use('/api/users', userRoutes)
 
 //route Post
-app.route('/api/post/all')
-  .get(
-    Post.getAllPost
-  )
-
-app.route('/api/post/add')
-  .post(
-    authenticateToken,
-    upload.single('gambar'),
-    Post.addPost
-  )
-
-app.route('/api/post/:id')
-  .post(
-    authenticateToken,
-    upload.single('gambar'),
-    Post.editPost
-  )
-
-app.route('/api/post/:id')
-  .get(
-    authenticateToken,
-    Post.getPost
-  )
-
-app.route('/api/post')
-  .get(
-    authenticateToken,
-    Post.getMyPost
-  )
-
-app.route('/api/post/delete/:id')
-  .delete(
-    authenticateToken,
-    Post.deletePost
-  )
-  
-
-
+app.use('/api/post', postRoutes)
 
 
 app.use((req,res,next) => {
